@@ -67,7 +67,7 @@ class: inverse, right, middle
 >__*H4.2*__: Individuos que perciben un mayor nivel de meritocracia en el país perciben que han experimentado una mayor movilidad social subjetiva y esperan que sus hijos también experimenten una movilidad social subjetiva ascendente.
 ---
 
-# Datos, variables y métodos
+# Datos y variables
 ## Datos
 * <p style="text-align: justify;"> ELSOC (2019) posee las respuestas de 3417 individuos </p>
 * <p style="text-align: justify;"> Se propone realizar un análisis univariado que permita describir la variación de las variables dependientes para, posteriormente, realizar un análisis bivariado con el fin de ver si esta variación de las variables dependientes se asocia con las variables independientes </p>
@@ -84,16 +84,6 @@ class: inverse, right, middle
 |En Chile las personas son recompensadas por su inteligencia|Desde totalmente en desacuerdo hasta totalmente de acuerdo| 
 |Nivel educacional| Educación básica, media, técnica profesional y universitaria  | 
 
----
-# Datos, variables y métodos
-## Métodos
-* <p style="text-align: justify;"> Se medirá la percepción de movilidad social subjetiva experimentada por los encuestados a partir de la diferencia entre su estatus social subjetivo y el estatus social subjetivo en que ubica a su familia de procedencia </p>
-* <p style="text-align: justify;"> Se medirá la percepción de movilidad social subjetiva esperada a partir de la diferencia entre el estatus social subjetivo esperado para sus hijos y el estatus social subjetivo de los encuestados </p>
-* <p style="text-align: justify;"> Valores negativos de estas variables indican una movilidad social subjetiva descendente, valores positivos indican una movilidad social subjetiva ascendente y el valor 0 indica que los individuos no perciben movilidad social. </p>
----
-# Principales resultados
-
-.center[![:scale 80%](../output/tables/table1.png)]
 ---
 
 # Principales resultados
@@ -112,7 +102,6 @@ xaringanExtra::use_panelset()
 ---
 
 # Principales resultados
-
 .panelset[
 .panel[.panel-name[Muestra]
 .center[![:scale 80%](../output/graphs/graf2.png)]
@@ -124,13 +113,13 @@ xaringanExtra::use_panelset()
 ---
 
 # Principales resultados
-
+### Relación entre Movilidad social subjetiva experimentada y esperada
 .center[![:scale 80%](../output/graphs/graf7.png)]
 
 ---
 
 # Principales resultados
-
+### Relación entre nivel educacional y Movilidad social subjetiva
 .panelset[
 .panel[.panel-name[Movilidad social experimentada]
 .center[![:scale 80%](../output/graphs/graf3.png)]
@@ -141,7 +130,7 @@ xaringanExtra::use_panelset()
 ]
 ---
 # Principales resultados
-
+### Relación entre percepción de meritocracia y Movilidad social subjetiva
 .panelset[
 .panel[.panel-name[Movilidad social experimentada]
 .center[![:scale 80%](../output/graphs/graf5.png)]

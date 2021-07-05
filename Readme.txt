@@ -1,3 +1,5 @@
+Informe realizado para el curso Metodología I del Magíster en Ciencias sociales de la FACSO Uchile
+
 Flujo de trabajo basado en protocolo IPO (https://juancarloscastillo.github.io/ipo/)
 
 ├── input: external information such as images, documents, bib files
