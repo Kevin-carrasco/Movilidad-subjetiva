@@ -1,0 +1,512 @@
+x="Nivel educacional", y= "Movilidad subjetiva experimentada") +
+theme_classic(base_size = 10)
+graf3
+graf3 <- data  %>%
+ggplot(aes(educacion, mss1)) +
+geom_boxplot(fill = "lightgray", color = "darkred") +
+stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016",
+x="Nivel educacional", y= "Movilidad subjetiva experimentada") +
+theme_classic(base_size = 10)
+graf3
+graf4 <- data  %>%
+ggplot(aes(educacion, msh1)) +
+geom_boxplot(fill = "lightgray", color = "darkred") +
+stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016",
+x="Nivel educacional", y= "Movilidad subjetiva esperada") +
+theme_classic(base_size = 10)
+pacman::p_load(dplyr, summarytools, webshot, sjPlot, ggplot2, scales, sjlabelled, polycor, corrplot)
+graf4 <- data  %>%
+ggplot(aes(educacion, msh1)) +
+geom_boxplot(fill = "lightgray", color = "darkred") +
+stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016",
+x="Nivel educacional", y= "Movilidad subjetiva esperada") +
+theme_classic(base_size = 10)
+graf4
+polychor(data$msh1, data$meritocracia)
+graf6 <- ggplot(data, aes(meritocracia, msh1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 12)
+graf6
+graf5 <- ggplot(data, aes(meritocracia, mss1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 12)
+graf5
+graf5 <- ggplot(data, aes(meritocracia, mss1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 10)
+graf5
+graf5 <- ggplot(data, aes(meritocracia, mss1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 11)
+graf5
+graf5 <- ggplot(data, aes(meritocracia, mss1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 10)
+graf5
+polychor(data$msh1, data$meritocracia)
+graf6 <- ggplot(data, aes(meritocracia, msh1)) +
+geom_point(size = 1) +
+geom_smooth(method = "lm") +
+labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.06]",
+x = "Percepción de meritocracia",
+y = "Movilidad social subjetiva experimentada") +
+theme_classic(base_size = 10)
+graf6
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.99, df = n - 1) * sd / sqrt(n))
+plotdata$Educacion <- factor(plotdata$educacion, levels = c("Educacion basica o menos", "Educación Media", "Educación Tecnica Superior", "Educacion universitaria y postgrado"), labels = c(
+"8vo básico
+o menos",
+"Educación
+Media",
+"Educación
+Téc.Superior",
+"Universidad
+o Posgrado"))
+plotdata<-na.omit(plotdata)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean_ig,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+View(plot_ig_educ)
+View(plotdata)
+plotdata$educacion <- factor(plotdata$educacion, levels = c("Educacion basica o menos", "Educación Media", "Educación Tecnica Superior", "Educacion universitaria y postgrado"), labels = c(
+"8vo básico
+o menos",
+"Educación
+Media",
+"Educación
+Téc.Superior",
+"Universidad
+o Posgrado"))
+plotdata<-na.omit(plotdata)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.99, df = n - 1) * sd / sqrt(n))
+plotdata$educacion <- factor(plotdata$educacion, levels = c("Educacion basica o menos", "Educación Media", "Educación Tecnica Superior", "Educacion universitaria y postgrado"), labels = c(
+"8vo básico
+o menos",
+"Educación
+Media",
+"Educación
+Téc.Superior",
+"Universidad
+o Posgrado"))
+plotdata<-na.omit(plotdata)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+View(plotdata)
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.99, df = n - 1) * sd / sqrt(n))
+plotdata<-na.omit(plotdata)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+geom_hline(yintercept = mean,
+color = "grey50",
+linetype = "solid") +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plotdata<-na.omit(plotdata)
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+theme(axis.title.y = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.title.x = element_text(family="Times New Roman", size = 14, hjust = 0.5),
+axis.text.x = element_text(family="Times New Roman", colour = "black", size = 12, hjust = 0.5),
+plot.title = element_text(family="Times New Roman", hjust=0.5, size=16)) + ggtitle("                                                             ") +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic() +
+ylim(-0.2,0.2)
+plot_ig_educ
+plot_ig_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic()
+plot_ig_educ
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic()
+plot_educ
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.975, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.95, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.9, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.5, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.5, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+plotdata <- data %>%
+group_by(educacion) %>%
+summarize(n = n(),
+mean = mean(mss1),
+sd = sd(mss1),
+se = sd / sqrt(n),
+ci = qt(0.99, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+aes(x = educacion,
+y = mean,
+group = 1)) +
+geom_errorbar(aes(ymin = mean - se,
+ymax = mean + se),
+width = .05, colour="grey50") +
+geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+plot_educ
+summary(data$meritocracia)
+data<- get(load("../input/data/data.RData"))
+pacman::p_load(dplyr, summarytools, webshot, sjPlot, ggplot2, scales, sjlabelled, polycor, corrplot, survey, srvyr, GGally, tidyr)
+data<- get(load("../input/data/data.RData"))
+data<- get(load("../input/data/data.RData"))
+View(data)
+data <- na.omit(data)
+view(dfSummary(select(data, mss4, msh1, educacion, meritocracia),
+plain.ascii = FALSE,
+style = "grid",
+#tmp.img.dir = "/tmp",
+graph.magnif = 0.75,
+headings = F,  # encabezado
+varnumbers = F, # num variable
+labels.col = T, # etiquetas
+na.col = F,    # missing
+graph.col = T, # plot
+valid.col = T, # n valido
+# col.widths = c(5,5,10,10,10,10)
+), file = "../output/tables/table1.html")
+view(dfSummary(select(data, mss4, msh4, educacion, meritocracia),
+plain.ascii = FALSE,
+style = "grid",
+#tmp.img.dir = "/tmp",
+graph.magnif = 0.75,
+headings = F,  # encabezado
+varnumbers = F, # num variable
+labels.col = T, # etiquetas
+na.col = F,    # missing
+graph.col = T, # plot
+valid.col = T, # n valido
+# col.widths = c(5,5,10,10,10,10)
+), file = "../output/tables/table1.html")
+webshot(url ="../output/tables/table1.html" ,file ="../output/tables/table1.png")
+data_long<- get(load("../input/data/data_long.RData"))
+data<- get(load("../input/data/data.RData"))
+data <- na.omit(data)
+view(dfSummary(select(data, mss4, msh4, educacion, meritocracia),
+plain.ascii = FALSE,
+style = "grid",
+#tmp.img.dir = "/tmp",
+graph.magnif = 0.75,
+headings = F,  # encabezado
+varnumbers = F, # num variable
+labels.col = T, # etiquetas
+na.col = F,    # missing
+graph.col = T, # plot
+valid.col = T, # n valido
+# col.widths = c(5,5,10,10,10,10)
+), file = "../output/tables/table1.html")
+webshot(url ="../output/tables/table1.html" ,file ="../output/tables/table1.png")
+polychor(data$mss4, data$meritocracia)
+polychor(data$msh4, data$meritocracia)
+Prueba <- data_long %>% na.omit(data_long) %>%
+pivot_longer(cols = c("annio1", "annio2", "annio3", "annio4"), names_to="annio") %>%
+arrange(annio)
+.center[![:scale 50%](../output/tables/table1.png)]
+---
+# Principales resultados
+-
+xaringan::inf_mr()
+sum(data$fe_poblacion)
+sum(data$fe_pobsex)
+install.packages("xaringan")
+install.packages("xaringan")
+install.packages("xaringan")

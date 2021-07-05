@@ -1,0 +1,159 @@
+---
+title: "Preparacion"
+author: "Kevin Carrasco"
+date: "26-05-2021"
+output: html_document
+---
+
+# Paquetes
+```{r}
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer)
+```
+
+# Cargar base
+```{r}
+coes_long<- get(load("../input/data/ELSOC_Wide_2016_2019_v1.00_R.RData"))
+```
+
+# Seleccionar variables
+
+```{r}
+data = coes_long %>% select(ess4=d01_01_w04,
+                            esf4=d01_02_w04,
+                            esh4=d01_03_w04,
+                            educacion=m01_w04,
+                            esfuerzo=c18_09_w04,
+                            inteligencia=c18_10_w04,
+                            fe_poblacion=fact_exp01_w04,
+                            fe_pobsex=fact_exp02_w04,
+                            estrato=estrato_w04,
+                            segmento=segmento_w04,
+                            annio4=annio_entr_w04)
+```
+
+# Recodificar variables
+## Estatus social subjetivo
+```{r}
+# Estatus social subjetivo individual
+summary(data$ess4)
+```
+```{r}
+# Estatus social subjetivo familiar
+summary(data$esf4)
+```
+```{r}
+# Estatus social subjetivo hijos
+summary(data$esh4)
+```
+
+```{r}
+data <- remove_all_labels(data)
+# Quitar NA
+## ESSS
+data$ess4 <- recode(data$ess4, "c(-888,-999)=NA")
+## ESF
+data$esf4 <- recode(data$esf4, "c(-888,-999)=NA")
+## ESH
+data$esh4 <- recode(data$esh4, "c(-888,-999)=NA")
+               
+# cambiar etiqueta
+data$ess4 <- set_label(x = data$ess4,label = "Estatus Social Subjetivo individual (2019)")
+get_label(data$ess1)
+
+data$esf4 <- set_label(x = data$esf4,label = "Estatus Social Subjetivo familiar (2019)")
+get_label(data$esf1)
+
+data$esh4 <- set_label(x = data$esh4,label = "Estatus Social Subjetivo hijos (2019)")
+get_label(data$esh1)
+```
+
+## Movilidad social subjetiva experimentada
+```{r}
+## 2019
+data$mss4 <- (data$ess4-data$esf4)
+data$mss4 <- set_label(x = data$mss4,label = "Movilidad social subjetiva experimentada (2019)")
+
+summary(data$mss4)
+```
+## Movilidad social subjetiva esperada
+```{r}
+## 2019
+data$msh4 <- (data$esh4-data$ess4)
+data$msh4 <- set_label(x = data$msh4,label = "Movilidad social subjetiva esperada (2019)")
+
+summary(data$msh4)
+```
+## Movilidad social subjetiva intergeneracional
+```{r}
+## 2019
+data$msg4 <- (data$esh4-data$esf4)
+data$msg4 <- set_label(x = data$msg4,label = "Movilidad social subjetiva intergeneracional (2019)")
+
+summary(data$msg4)
+```
+
+## Educacion
+```{r}
+summary(data$educacion)
+```
+```{r}
+# NA
+data$educacion <- recode(data$educacion, "c(-888,-999)=NA")
+# recodificar
+data$educacion <- car::recode(data$educacion, "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")
+data$educacion <- factor(data$educacion,
+                         levels = c("1",
+                                    "2",
+                                    "3",
+                                    "4"),
+                         labels=c( "Educacion basica o menos",
+                                   "Educacion media",
+                                   "Educacion tecnica superior",
+                                   "Educacion universitaria y Postgrado"))
+data$educacion <- set_label(x = data$educacion,label = "Nivel educacional")
+summary(data$educacion)
+class(data$educacion)
+
+```
+
+## Percepción de meritocracia
+```{r}
+# recompensa x Esfuerzo
+summary(data$esfuerzo)
+```
+```{r}
+# Recompensa x inteligencia
+summary(data$inteligencia)
+```
+```{r}
+# Quitar NA
+data$esfuerzo <- recode(data$esfuerzo, "c(-888,-999)=NA")
+data$inteligencia <- recode(data$inteligencia, "c(-888,-999)=NA")
+
+# cambiar etiqueta
+get_label(data$esfuerzo)
+data$esfuerzo <- set_label(x = data$esfuerzo,label = "Las personas son recompensadas por sus esfuerzos")
+get_label(data$inteligencia)
+data$inteligencia <- set_label(x = data$inteligencia,label = "Las personas son recompensada por su inteligencia")
+```
+
+```{r}
+# Crear indice de percepción de meritocracia
+data <- data %>%
+  rowwise() %>%
+  mutate(meritocracia =
+           mean(c(esfuerzo,inteligencia), na.rm = T))
+data$meritocracia <- set_label(x = data$meritocracia,label = "Percepcion de meritocracia")
+summary(data$meritocracia)
+```
+
+# Guardar base
+```{r}
+save(data,file = "../input/data/data_long.RData")
+data_2019 = select(data, ess4, esh4, esf4, educacion, esfuerzo, inteligencia, mss4, msh4, msg4, meritocracia, fe_poblacion, fe_pobsex, estrato, segmento, annio4)
+save(data_2019, file="../input/data/data.RData")
+```
+
+
+
+

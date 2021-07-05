@@ -1,0 +1,240 @@
+---
+title: "Analisis"
+author: "Kevin Carrasco"
+date: "27-05-2021"
+output: html_document
+---
+
+# Cargar paquetes
+```{r}
+pacman::p_load(dplyr, summarytools, webshot, sjPlot, ggplot2, scales, sjlabelled, polycor, corrplot, survey, srvyr, GGally, tidyr)
+```
+
+# Cargar base de datos procesada
+```{r}
+data<- get(load("../input/data/data.RData"))
+```
+
+# Eliminar casos perdidos
+```{r}
+data <- na.omit(data)
+```
+
+```{r}
+# Falta seleccionar las variables originales, para un primer descriptivo. Luego generar gráficos más bonitos para mss
+
+
+view(dfSummary(select(data, ess1, esf1, esh1, educacion, esfuerzo, inteligencia),
+               plain.ascii = FALSE,
+               style = "grid",
+               #tmp.img.dir = "/tmp",
+               graph.magnif = 0.75,
+               headings = F,  # encabezado
+               varnumbers = F, # num variable
+               labels.col = T, # etiquetas
+               na.col = F,    # missing
+               graph.col = T, # plot
+               valid.col = T, # n valido
+               # col.widths = c(5,5,10,10,10,10)
+               ), file = "../output/tables/table1.html")
+webshot(url ="../output/tables/table1.html" ,file ="../output/tables/table1.png")
+```
+
+# MSS
+
+```{r}
+summary(data$mss1)
+tabla1 = round(prop.table(table(mss1=factor(data$mss1))),3)
+tabla1 = as.data.frame(tabla1)
+tabla1
+graf1<-tabla1 %>% ggplot(aes(mss1, Freq)) +
+  geom_bar(stat = "identity",position = "dodge") +
+  geom_text(aes(label = paste(round(Freq*100,3),"%")), color = "black", vjust = -0.5, position = position_dodge(width = 1),size = 4) +
+  xlab("Movilidad social subjetiva experimentada") +
+  ylab("Porcentaje") +
+  scale_y_continuous(limits = c(0, 0.4))+
+  labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016") +
+  theme_classic(base_size = 12)
+graf1
+
+ggsave(graf1, file = "../output/graphs/graf1.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+# MSH
+
+```{r}
+summary(data$msh1)
+tabla2 = round(prop.table(table(msh1=factor(data$msh1))),3)
+tabla2 = as.data.frame(tabla2)
+tabla2
+graf2<-tabla2 %>% ggplot(aes(msh1, Freq)) +
+  geom_bar(stat = "identity",position = "dodge") +
+  geom_text(aes(label = paste(round(Freq*100,3),"%")), color = "black", vjust = -0.5, position = position_dodge(width = 1),size = 4) +
+  xlab("Movilidad social subjetiva esperada") +
+  ylab("Porcentaje") +
+  scale_y_continuous(limits = c(0, 0.3))+
+  labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016") +
+  theme_classic(base_size = 12)
+graf2
+
+ggsave(graf2, file = "../output/graphs/graf2.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+# Educacion x MSS
+```{r}
+graf3 <- data  %>%
+  ggplot(aes(educacion, mss1)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+  labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016",
+       x="Nivel educacional", y= "Movilidad subjetiva experimentada") +
+  theme_classic(base_size = 10)
+graf3
+
+ggsave(graf3, file = "../output/graphs/graf3.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+# Educacion x MSH
+```{r}
+graf4 <- data  %>%
+  ggplot(aes(educacion, msh1)) +
+  geom_boxplot(fill = "lightgray", color = "darkred") +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "steelblue") +
+  labs(subtitle = "Fuente: Elaboración propia en base datos ELSOC 2016",
+       x="Nivel educacional", y= "Movilidad subjetiva esperada") +
+  theme_classic(base_size = 10)
+graf4
+
+ggsave(graf4, file = "../output/graphs/graf4.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+# Correlación MSS y meritocracia
+
+```{r}
+polychor(data$mss1, data$meritocracia)
+
+graf5 <- ggplot(data, aes(meritocracia, mss1)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm") +
+  labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.04]",
+       x = "Percepción de meritocracia",
+       y = "Movilidad social subjetiva experimentada") +
+  theme_classic(base_size = 10)
+graf5
+
+ggsave(graf5, file = "../output/graphs/graf5.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r}
+polychor(data$msh1, data$meritocracia)
+
+graf6 <- ggplot(data, aes(meritocracia, msh1)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm") +
+  labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.06]",
+       x = "Percepción de meritocracia",
+       y = "Movilidad social subjetiva experimentada") +
+  theme_classic(base_size = 10)
+graf6
+
+ggsave(graf6, file = "../output/graphs/graf6.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
+```{r}
+plotdata <- data %>%
+  group_by(educacion) %>%
+  summarize(n = n(),
+         mean = mean(mss1),
+         sd = sd(mss1),
+         se = sd / sqrt(n),
+         ci = qt(0.99, df = n - 1) * sd / sqrt(n))
+plot_educ <- ggplot(plotdata,
+                       aes(x = educacion, 
+                           y = mean, 
+                           group = 1)) +
+  geom_errorbar(aes(ymin = mean - se,
+                    ymax = mean + se),
+                width = .05, colour="grey50") +
+  geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
+  xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+
+plot_educ
+```
+
+## Factores de expansión
+### Opciones generales
+
+```{r}
+options(survey.lonely.psu = "certainty" )
+```
+
+```{r}
+data$mss1_fact <- as.factor(data$mss1)
+data$msh1_fact <- as.factor(data$msh1)
+data$educacion <- as.factor(data$educacion)
+data$meritocracia <- as.factor(data$meritocracia)
+ds <- data %>% as_survey_design(ids = 1,
+                                strata = estrato,
+                                weights = fe_poblacion)
+```
+
+### Contar casos por categoria de respuesta
+```{r}
+## Con error estandar
+ds %>% group_by(mss1_fact) %>% summarise(movilidad=survey_total(na.rm = TRUE))
+```
+```{r}
+# Con intervalos de confianza
+ds %>% group_by(mss1_fact) %>% summarise(movilidad=survey_total(na.rm = TRUE,
+                                                           vartype = c("ci")))
+```
+### Proporciones por categoria de respuesta
+```{r}
+ds %>% group_by(mss1_fact) %>% 
+  summarise(proportion = survey_mean(vartype = c("ci"),na.rm = TRUE))
+```
+
+```{r}
+# Movilidad experimentada
+ds %>% group_by(mss1_fact) %>% 
+  summarise(movilidad=survey_total(na.rm = TRUE, vartype=c("ci"),level=c(0.95))) %>%
+  ggplot(aes(x=mss1_fact,y=movilidad,fill=mss1_fact))+
+  geom_bar(stat = "identity") + 
+  geom_errorbar(aes(ymin=movilidad_low, ymax=movilidad_upp),
+                  width=0.2, position=position_dodge(.9))
+```
+
+```{r}
+# Movilidad esperada
+ds %>% group_by(msh1_fact) %>% 
+  summarise(movilidad=survey_total(na.rm = TRUE, vartype=c("ci"),level=c(0.95))) %>%
+  ggplot(aes(x=msh1_fact,y=movilidad,fill=msh1_fact))+
+  geom_bar(stat = "identity") + 
+  geom_errorbar(aes(ymin=movilidad_low, ymax=movilidad_upp),
+                  width=0.2, position=position_dodge(.9))
+```
+### Media --> Prueba con estatus subjetivo. Hay diferencias por lo menos. Pasar mss a numero de nuevo y probar esto
+```{r}
+ds %>% group_by(educacion) %>% 
+  summarise(media_educ = survey_mean(mss1,vartype = c("ci"),na.rm = TRUE))
+```
+### Grafico de cajas
+```{r}
+svyboxplot(mss1~educacion, design=ds,all.outliers=TRUE)
+```
+```{r}
+data %>% select(msh1,mss1) %>%
+  ggpairs()
+```
+# No sirve
+```{r}
+Prueba <- data_long %>% na.omit(data_long) %>%
+  pivot_longer(cols = c("annio1", "annio2", "annio3", "annio4"), names_to="annio") %>%
+  arrange(annio)
+
+Prueba <- Prueba %>% pivot_longer(cols = c("mss1", "mss2", "mss3", "mss4"), names_to="mss")
+
+data_long %>% pivot_longer(cols = c("annio1", "annio2", "annio3", "annio4"), names_to="annio") %>%
+  group_by(annio) %>% summarise(movilidad=mean(mss4, na.rm=TRUE))
+```
+

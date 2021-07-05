@@ -1,0 +1,185 @@
+---
+title: |
+ | \vspace{5cm} Movilidad social subjetiva. Percepciones sobre ascenso, descenso y permanencia en la escala de estatus social subjetivo en Chile
+subtitle: |
+  Curso Metodología I: Profesores Rodrigo Medel & Nicolás Ratto - Magíster en Ciencias Sociales mención Sociología de la Modernización
+author:  |
+  Kevin Carrasco Quintanilla 
+date: "`r Sys.Date()`"
+header-includes:
+- \usepackage{titling}
+- \pretitle{\begin{center}\LARGE\includegraphics[width=10cm]{input/images/facso.png}\\[\bigskipamount]}
+- \posttitle{\end{center}}
+output:
+  pdf_document: 
+    keep_tex: yes
+    highlight: tango
+    number_sections: TRUE
+    pandoc_args: !expr rmdfiltr::add_wordcount_filter()
+  html_document:
+    highlight: tango
+bibliography: input/bib/Movilidad social.bib
+linkcolor: blue
+urlcolor: blue
+link-citations: yes
+csl: input/bib/apa.csl
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(cache=FALSE, # guarda renderizaciones parciales, ahorra tiempo
+                      warning = FALSE, # evita publicar advertencias
+                      message = FALSE) # evita publicar mensajes
+
+Sys.setlocale("LC_ALL","ES_ES.UTF-8") # para temas de caracteres en español, recomendable
+```
+
+<div style="text-align: justify">
+\newpage
+
+# Introducción.
+
+La igualdad de oportunidades es un pilar fundamental de las sociedades democráticas modernas. Tanto así, que la Comisión económica para América Latina y el Caribe (CEPAL) ha señalado que su importancia va más allá de la estructura meritocrática de oportunidades [@cepal_hora_2010]. Esto significa que las democracias modernas deben garantizar a sus ciudadanos el derecho, “por el solo hecho de ser parte de la sociedad e independientemente de sus logros individuales y recursos monetarios, a acceder a ciertos umbrales de bienestar social y reconocimiento” [@cepal_hora_2010 11]. En este sentido, la igualdad de oportunidades es una situación ideal que garantiza un mayor bienestar social y reconocimiento para cada uno de los ciudadanos, donde las oportunidades “no están predeterminadas por los recursos económicos, sociales y culturales del hogar de origen, ni por discriminaciones de género, raza, apariencia física o de otro tipo” [@pnud_Desiguales_2017 92]. Sin embargo, la desigualdad de oportunidades continúa siendo uno de los temas principales en el debate público, tanto por sus consecuencias materiales como por las distintas formas de legitimación social que reproducen la desigualdad. Los índices de desigualdad (por ej. Coeficiente Gini=0.44 en 2017) han posicionado a Chile como uno de los países más desiguales de la región, donde incluso en la actualidad la apariencia y el aspecto físico son un buen predictor de la clase social, delatando “a una sociedad con escasa movilidad social, en la que han primado los prejuicios y la discriminación en el acceso a las oportunidades” [@pnud_Desiguales_2017 34].
+
+Una de las principales herramientas para conocer las oportunidades que una sociedad ofrece a sus ciudadanos consiste en establecer si un individuo tendrá la posibilidad de lograr una mejoría en sus condiciones de vida, sea durante su propia vida o con respecto a la situación de sus padres [@espinoza_Estratificacion_2013]. Por lo tanto, estudiar el grado de movilidad social que posee un país constituye uno de los aspectos más relevantes para comprender el acceso a oportunidades y a un mayor bienestar social por parte de los individuos. Hasta ahora, los estudios sobre desigualdad y movilidad social se han enfocado, por un lado, en los aspectos objetivos de la movilidad, abarcando dimensiones sobre movilidad ocupacional a partir del esquema de clases de Goldthorpe, Erikson y Portocarrero (EGP) [por ej. @torche_Estratificacion_2004; @espinoza_Estratificacion_2013] y sobre movilidad educacional, resaltando los beneficios que el ingreso a la educación superior trae para sus integrantes [por ej. @perezverdugo_Factores_2018; @pnud_Desiguales_2017]. Por otro lado, un poco menos estudiado han sido los aspectos subjetivos de la movilidad social, que se refiere a las creencias subjetivas de los individuos con respecto a su capacidad para ascender a una posición de clase social más alta [@huang_Effects_2017], donde se han abarcado elementos como el estatus social subjetivo [@castillo_Todos_2013] y las percepciones y preferencias sobre la meritocracia y la desigualdad económica [@castillo_Meritocracia_2019]. Además, se ha demostrado que una mayor movilidad social subjetiva está relacionada positivamente con un mayor bienestar psicológico [@prag_Subjective_2021] y que altos niveles de movilidad social subjetiva podrían actuar como un elemento motivacional que alentara a los adolescentes a esforzarse para lograr buenos resultados académicos [@zhang_Family_2021]. De esta forma, el objetivo de esta investigación es profundizar en la descripción de la movilidad social subjetiva, abordando el estatus social subjetivo de los individuos en comparación con el estatus social subjetivo de su familia de procedencia y el estatus social subjetivo esperado para sus hijos.
+
+Dentro de la movilidad social subjetiva se encuentran distintos elementos que son determinantes para la percepción de los individuos sobre las posibilidades que poseen para ascender en la escala de estatus social. Estos elementos pueden ser tanto objetivos como subjetivos, ya que la trayectoria de cada individuo puede ser explicada a partir de propiedades personalmente adquiridas o por la pertenencia a un contexto sociocultural o familiar determinado [Madero 2011, citado en @castillo_Todos_2013 160]. Por un lado, elementos objetivos como el nivel educacional, el nivel socioeconómico y características adscriptivas como la raza o etnia afectan directamente las percepciones que tienen los individuos sobre sus propias oportunidades para ascender en una estructura meritocrática de oportunidades ya que, por ejemplo, en los sectores populares se tiende a poner la esperanza de movilidad social en las nuevas generaciones, quienes al insertarse en el sistema de educación superior serán “más que uno” [@pnud_Desiguales_2017 31]. Por otro lado, elementos como el estatus subjetivo de la familia de origen y el estatus subjetivo esperado para sus hijos permiten explorar, por ejemplo, en qué medida el posicionamiento de origen se asocia al posicionamiento actual [@castillo_Todos_2013] y en qué medida la diferencia entre el posicionamiento de origen y el posicionamiento actual se asocia con el posicionamiento esperado para los hijos en la escala de estatus social.
+
+De esta forma, el presente estudio se guía a partir de las preguntas sobre ¿cuál es el nivel de movilidad social subjetiva percibida en Chile? Y, considerando la importancia de factores objetivos y subjetivos, ¿cuál es la relación del nivel educacional y la percepción de meritocracia con el nivel de movilidad social subjetiva? Así, se espera contribuir en una mayor comprensión del nivel de movilidad social percibido por la sociedad chilena a partir de distintos elementos que podrían afectar la percepción del ascenso experimentado en la escala de estatus social.
+
+# Objetivo general
+
+Debido a que esta investigación busca, en primer lugar, describir la percepción de movilidad social subjetiva en Chile y, en segundo lugar, analizar la asociación entre factores objetivos y subjetivos sobre la percepción de movilidad social subjetiva, se plantea esta investigación bajo un carácter descriptivo y correlacional. De esta forma, se plantea el siguiente objetivo: Describir el nivel de movilidad social subjetiva en Chile durante el 2019 y su asociación con dos elementos que condicionan la percepción de movilidad social subjetiva, que permite percibir el ascenso, descenso o permanencia experimentada en la escala de estatus social.
+
+## Objetivos específicos
+
+1.	Describir la percepción de movilidad social subjetiva experimentada en Chile durante el 2019 a partir de la diferencia entre el estatus social subjetivo individual y el estatus social subjetivo de la familia de procedencia.
+
+2.	Describir la percepción de movilidad social subjetiva esperada en Chile durante el 2019 a partir de la diferencia entre el estatus social subjetivo esperado para los hijos y el estatus social subjetivo individual.
+
+3. Analizar si la experiencia de movilidad social ascendente se asocia con un mayor nivel de movilidad social esperada para los hijos.
+
+4.	Analizar si dos elementos, uno objetivo (nivel educacional del entrevistado) y otro subjetivo (percepción de meritocracia), se asocian con la percepción de movilidad social experimentada y esperada en Chile durante el 2019.
+
+# Antecedentes
+
+La movilidad social intergeneracional se refiere a las diferencias en las desigualdades sociales y su transmisión entre padres e hijos, donde una baja movilidad intergeneracional indica que la posición social de las personas se ve determinada por la posición social de sus padres, mientras que una alta movilidad intergeneracional indica una relativa independencia entre la posición social de padres e hijos [@pnud_Desiguales_2017 74]. En este sentido, existen diferentes formas de comparar la posición social entre padres e hijos, siendo uno de los principales la que respecta al enfoque de la movilidad ocupacional, donde @torche_Estratificacion_2004 señalan que en Chile existe una mayor movilidad relativa en la parte baja de la pirámide social, asociada a los movimientos de salida y entrada de la pobreza. Por el contrario, @ruiz_chilenos_2014 señalan una dificultad para continuar con el enfoque tradicional de movilidad social bajo una perspectiva ocupacional, ya que a partir de las nuevas condiciones laborales marcadas principalmente por la precarización y el subcontrato, se modifica el proceso actual de formación de clases sociales. Por su parte, Espinoza, et. al [-@espinoza_Estratificacion_2013] señalan que resulta más difícil en 2009 que en 1999 encontrarse en una clase ocupacional sustantivamente diferente a la de los padres. Esto implica que en Chile existe “una estructura de clases relativamente móvil y permeable en su parte media, pero que presenta una tendencia a la polarización, pues las distancias sociales continúan aumentando a pesar del crecimiento económico” [@espinoza_Estratificacion_2013 187]. En este sentido, cuando las personas comparan su posición actual con la de generaciones anteriores existe cierto grado de acuerdo sobre los progresos del país, pero predomina una sensación de que la movilidad sigue siendo relativa, de que los grupos altos siguen teniendo seguridades y ventajas que el resto no tiene [@pnud_Desiguales_2017 163].
+
+Otra forma de comparar la posición social entre padres e hijos emerge desde la necesidad de explorar nuevas fuentes de información que permitan comprender el nivel de movilidad social que posee una sociedad, a fin de conocer cuáles son las percepciones que poseen las personas a pesar de los avances y reconocimientos de una movilidad social objetiva. Abordar esta dimensión de percepciones sobre movilidad social implica enfocarse en lo que es observado por los individuos y las consecuencias que esto tiene para la sociedad. Específicamente, la hipótesis de una perspectiva de movilidad ascendente (*the POUM hypothesis*) implica que los individuos que están por debajo del promedio de ingresos son optimistas sobre su futuro, tanto propio como el de sus hijos, y que, debido a este optimismo, estarían menos de acuerdo con políticas redistributivas, ya que estas podrían perjudicarlos en el futuro [@benabou_Social_1998]. Sin embargo, @gavira_Social_2008 señala que en América Latina la mayor parte de la población (47%) percibe que se encuentra en la misma posición que sus padres, mientras que un 33% cree que se encuentra más abajo que sus padres y solo un 20% percibe que se encuentra por sobre el estatus social de sus padres.
+
+Para el caso chileno, una de las principales investigaciones realizadas bajo esta línea de investigación es la llevada a cabo por Castillo, et. al [-@castillo_Todos_2013], donde se señala que el estatus social subjetivo de la familia de procedencia influye positivamente en el estatus social subjetivo individual, excepto en el nivel más alto de la escala de estatus social subjetivo familiar, donde los individuos tienden a ubicarse en posiciones más bajas de la escala. De esta forma, considerando la evidencia previa y que, en general, se percibe un mayor crecimiento económico, se plantea la siguiente hipótesis:
+
+>__*H1*__: Los individuos se ubican en una posición mayor de la escala de estatus social subjetivo que la posición en que ubican a sus familias de procedencia. Es decir, las diferencias entre el estatus social subjetivo individual y el familiar serán en su mayoría positivas. (Percepción ascendente de movilidad experimentada)
+
+>__*H2*__: Los individuos ubicarán a sus hijos en una posición mayor de la escala de estatus social subjetivo que la posición en que se ubican a sí mismos. Es decir, las diferencias entre el estatus social subjetivo esperado para sus hijos y el estatus propio serán en su mayoría positivas. (Percepción ascendente de movilidad esperada)
+
+De manera similar a lo anterior, @perezverdugo_Factores_2018 señala que quienes poseen experiencias individuales positivas en torno a la movilidad social suelen aprender cuales son los factores que influyen en el éxito económico, afectando directamente a sus acciones futuras. Así, se plantea la siguiente hipótesis sobre el estatus social esperado para los hijos:
+
+>__*H3*__: Los individuos que perciben que han experimentado una movilidad social ascendente, esperan que sus hijos también experimenten una movilidad social ascendente
+
+Asimismo, Castillo, et. al [-@castillo_Educacion_2013] señalan que la percepción de desigualdad no es un espejo de la realidad, sino que se producen una serie de sesgos relacionados con dos fuentes: el origen social (por ejemplo, la clase social o el estatus) y las creencias culturales que predominan acerca de la justicia distributiva y la meritocracia. En este sentido, la educación, en la medida que juega un papel importante en la determinación de la condición social de las personas, es apreciada como canal de movilidad social [@ruiz_chilenos_2014 60]. Por lo tanto, se propone evaluar dos aspectos que podrían estar asociados con la percepción de movilidad social experimentada y esperada, a saber, el nivel educacional del entrevistado y la percepción de meritocracia.
+
+>__*H4.1*__: Individuos que poseen un mayor nivel educacional perciben que han experimentado una mayor movilidad social subjetiva y esperan que sus hijos también experimenten una movilidad social subjetiva ascendente.
+
+>__*H4.2*__: Individuos que perciben un mayor nivel de meritocracia en el país perciben que han experimentado una mayor movilidad social subjetiva y esperan que sus hijos también experimenten una movilidad social subjetiva ascendente.
+
+# Metodología
+
+La metodología planteada para realizar esta investigación es de carácter cuantitativa a partir de datos secundarios. Más precisamente, el Centro de Estudios de Conflicto y Cohesión Social (COES) realiza desde el año 2016 el primer “Estudio Longitudinal Social de Chile” (ELSOC). Este estudio consiste en encuestar a casi 3.000 chilenos, anualmente, a lo largo de una década. Por lo tanto, el diseño de ELSOC es cuantitativo de tipo panel, es decir, que se repite su aplicación año a año. 
+
+El principal objetivo de ELSOC es evaluar la manera como piensan, sienten y se comportan los chilenos en torno a un conjunto de temas referidos al conflicto y la cohesión social en Chile. Además, permite comparar la estabilidad o cambio en diversas dimensiones sociales atendiendo a factores que los moderan o explican a lo largo de los años [@coes_Estudio_2021].
+
+Esta encuesta es aplicada por medio de un cuestionario estructurado que posee 7 módulos diferentes: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica. Posee un muestreo probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico (aleatorio en todas sus etapas): Se eligieron aleatoriamente 40 ciudades con más de 10.000 habitantes (92 comunas de 13 regiones), dentro de estas se escogieron aleatoriamente 1067 manzanas. Dentro de cada manzana se escogieron hogares aleatoriamente y dentro de cada hogar fueron elegidos aleatoriamente individuos con 18 años o más. Por lo tanto, su unidad básica de observación son personas individuales. Asimismo, la población objetivo son hombres y mujeres de 18 a 75 años. Esta encuesta alcanza un 77% de representatividad de la población total del país y un 93% de la población urbana, con un error muestral del 2%. La muestra alcanzada en 2016 posee las respuestas de 2927 individuos [@coes_Radiografia_2019].
+
+En lo específico de esta investigación, se propone realizar un análisis univariado que permita describir la variación de las variables dependientes para, posteriormente, realizar un análisis bivariado con el fin de ver si esta variación de las variables dependientes se asocia con las variables independientes.
+
+## Medición y operacionalización de variables
+
+En ELSOC, dentro de su módulo de Desigualdad y Legitimidad, se incluyen tres preguntas que abordan el estatus social subjetivo de las personas: (1) El estatus social subjetivo del entrevistado; (2) el estatus social subjetivo en que ubica a su familia de procedencia; y (3) el estatus social subjetivo en que el entrevistado cree que se ubicarán sus hijos.
+
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE}
+pacman::p_load(knitr, kableExtra, dplyr)
+```
+```{r echo=FALSE}
+table_format = if(is_latex_output()) {
+  "latex"
+} else if(is_html_output()) {
+  "html"
+}
+```
+```{r echo=FALSE}
+tab <- read.csv(file = "input/table.csv",header = 1,sep = ";",encoding = "UTF-8")
+
+kable(tab,table_format,booktabs = T, linesep = "",col.names =  c("Dimensión", "Encabezado", "Categoría de respuesta", "Indicador"), caption = "Estatus social subjetivo") %>%
+  kable_styling(
+    full_width = T,
+    latex_options = c("hold_position"),
+    position = "center",
+    font_size = 8,
+    bootstrap_options=c("striped", "bordered")) %>%
+  column_spec(column = 1,width = "2 cm") %>%
+  column_spec(column = 2,width = "4 cm") %>%
+  column_spec(column = 3,width = "3 cm") %>%
+  column_spec(column = 4,width = "4 cm") %>%
+  collapse_rows(columns = 1:3, valign = "middle")
+```
+
+A partir de estos tres indicadores que se presentan en la tabla 1 se construirán dos variables dependientes que miden Movilidad Social Subjetiva. Siguiendo el trabajo de [@gavira_Social_2008], por un lado, se medirá la percepción de movilidad social subjetiva experimentada por los encuestados a partir de la diferencia entre su estatus social subjetivo y el estatus social subjetivo en que ubica a su familia de procedencia. Por otro lado, se medirá la percepción de movilidad social subjetiva esperada a partir de la diferencia entre el estatus social subjetivo esperado para sus hijos y el estatus social subjetivo de los encuestados. De esta forma, valores negativos de estas variables indican una movilidad social subjetiva descendente, valores positivos indican una movilidad social subjetiva ascendente y el valor 0 indica que los individuos no perciben movilidad social.
+
+En relación con las variables independientes, estas intentan ver la asociación que existe entre un factor objetivo y otro subjetivo sobre las variables dependientes. Por lo tanto, se utilizará el nivel educacional de los encuestados como una factor objetivo y el grado de percepción de meritocracia como un factor subjetivo. Estas variables se presentan en su versión original en la tabla 2. De esta forma, el nivel educacional fue agrupado en 4 categorías: 1) Educación básica o menos; 2) Educación media; 3) Educación técnica superior; y 4) Educación universitaria y postgrado. Asimismo, la percepción de meritocracia será medida a partir de un índice promedio entre dos variables: 1) el grado de acuerdo con que el esfuerzo es recompensado; y 2) el grado de acuerdo con que la inteligencia es recompensada.
+
+```{r echo=FALSE}
+table_format = if(is_latex_output()) {
+  "latex"
+} else if(is_html_output()) {
+  "html"
+}
+```
+```{r echo=FALSE}
+tab <- read.csv(file = "input/table2.csv",header = 1,sep = ";",encoding = "UTF-8")
+
+kable(tab,table_format,booktabs = T, linesep = "",col.names =  c("Dimensión", "Encabezado", "Indicador", "Categoría de respuesta"), caption = "Variables independientes") %>%
+  kable_styling(
+    full_width = T,
+    latex_options = c("hold_position"),
+    position = "center",
+    font_size = 8,
+    bootstrap_options=c("striped", "bordered")) %>%
+  column_spec(column = 1,width = "2 cm") %>%
+  column_spec(column = 2,width = "4 cm") %>%
+  column_spec(column = 3,width = "4 cm") %>%
+  column_spec(column = 4,width = "4 cm") %>%
+  collapse_rows(columns = 1:4, valign = "middle")
+```
+
+# Análisis descriptivo
+
+```{r echo=FALSE, fig.cap="Movilidad social subjetiva experimentada", fig.align = 'center', out.width = '80%',out.height='80%'}
+knitr::include_graphics(path = "output/graphs/graf1.png")
+```
+
+En la figura 1 se presenta la percepción de movilidad social subjetiva experimentada, es decir, el grado en que los individuos perciben que se han movido en la escala de estatus social subjetivo en comparación con el estatus de sus padres. Esta variable posee valores entre -10 y 10, con una mediana de 0 y una media de 0,5. Así, se puede observar que una gran parte de la muestra percibe una ausencia de movilidad social subjetiva (37.2%), un 45.2% percibe que se encuentra en una posición superior a la posición que ocupaban sus padres (un 18.1% en una posición sobre la de sus padres y un 0.1% siete posiciones sobre sus padres) y un 17.5% percibe que se encuentra en una posición inferior a la posición que ocupaban sus padres (un 6.6% una posición bajo la de sus padres y un 0.1% diez posiciones bajo sus padres). Por lo tanto, en general, los individuos perciben que su posición no ha cambiado radicalmente en comparación con sus padres, lo que va en línea con la literatura previa: En la escala de estatus social subjetivo se perciben bajas probabilidades de experimentar una movilidad social ascendente o descendente, demostrando que se percibe una estructura social más bien rígida.
+
+```{r echo=FALSE, fig.cap="Movilidad social subjetiva esperada", fig.align = 'center', out.width = '80%',out.height='80%'}
+knitr::include_graphics(path = "output/graphs/graf2.png")
+```
+
+En la figura 2 se presenta la percepción de movilidad social subjetiva esperada, es decir, el grado en que los individuos perciben que sus hijos podrán ascender o descender dentro de la estructura de estatus social en comparación con su posición actual. Esta variable posee valores entre -8 y 10, con una mediana de 2 y una media de 2. De esta forma, se puede observar que un 23.2% de la muestra percibe que sus hijos se encontrarán en la misma posición de estatus social en la que ellos se encuentran actualmente, un 72.7% percibe que sus hijos se encontrarán en una posición superior a la de ellos (un 18.8% percibe que se encontrarán una posición más arriba y un 0.3% que se encontrarán diez posiciones más arriba) y un 4.1% percibe que sus hijos se encontrarán en una posición inferior a la que ellos ocupan actualmente (un 2.7% percibe que se encontrarán una posición más abajo y un 0.1% seis posiciones más abajo). En este sentido, en general se cumple lo planteado por la hipótesis de la perspectiva de movilidad social subjetiva ascendente, en que los individuos son optimistas tanto por su posición como la de sus hijos.
+
+```{r echo=FALSE, fig.cap="Movilidad social subjetiva experimentada según nivel educacional", fig.align = 'center', out.width = '80%',out.height='80%'}
+knitr::include_graphics(path = "output/graphs/graf3.png")
+```
+
+En la figura 3 se presenta la percepción de movilidad social subjetiva experimentada según el nivel educacional alcanzado. Por un lado, las personas que poseen educación básica o menos, media y universitaria o postgrado poseen el 50% de los datos centrales entre 0 y 2, estando su rango de valores entre -3 y 5. Por otro lado, las personas que poseen educación técnica superior poseen el 50% de sus valores centrales entre 0 y 1, estando su rango de valores entre -1 y 1. Asimismo, se puede observar que para los cuatro niveles educacionales la mediana es 0 y su media es cercana a 0 (0.4 aproximadamente). En este sentido, no se observan mayores diferencias en la percepción de movilidad social subjetiva al comparar por nivel educacional alcanzado.
+
+```{r echo=FALSE, fig.cap="Correlación entre movilidad social subjetiva experimentada y percepción de meritocracia", fig.align = 'center', out.width = '80%',out.height='80%'}
+knitr::include_graphics(path = "output/graphs/graf5.png")
+```
+
+En la figura 4 se presenta la correlación que existe entre la percepción de movilidad social subjetiva experimentada y la percepción de meritocracia. Al tratarse de variables ordinales, se estimó una correlación policórica, que posee un tamaño de r=-0.01. En este sentido, esta correlación posee una dirección negativa, en el sentido de que, a medida que aumenta la percepción de meritocracia, la percepción de movilidad social subjetiva disminuye. Sin embargo, la fuerza de esta correlación es casi nula, por lo que no se puede concluir que la percepción de meritocracia influya de manera importante en la percepción de movilidad social subjetiva.
+
+
+\newpage
+# Referencias
+<div style="text-align: justify">
+
