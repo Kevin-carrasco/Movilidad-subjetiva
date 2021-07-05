@@ -17,3 +17,4 @@ Flujo de trabajo basado en protocolo IPO (https://juancarloscastillo.github.io/i
 |
 - README.md : the general introductory file
 - paper.md / paper.html / paper.pdf: the paper
+- Presentation: folder containing rmd-presentation of results
