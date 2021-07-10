@@ -7,7 +7,7 @@ output: html_document
 
 # Cargar paquetes
 ```{r}
-pacman::p_load(dplyr, summarytools, webshot, sjPlot, ggplot2, scales, sjlabelled, polycor, corrplot, survey, srvyr, GGally, tidyr)
+pacman::p_load(dplyr, summarytools, webshot, sjPlot, ggplot2, ggpubr, scales, sjlabelled, polycor, corrplot, survey, srvyr, GGally, tidyr)
 ```
 
 # Cargar base de datos procesada
@@ -29,7 +29,7 @@ view(dfSummary(select(data, mss4, msh4, educacion, meritocracia),
                plain.ascii = FALSE,
                style = "grid",
                #tmp.img.dir = "/tmp",
-               graph.magnif = 0.75,
+               graph.magnif = 1.0,
                headings = F,  # encabezado
                varnumbers = F, # num variable
                labels.col = T, # etiquetas
@@ -81,6 +81,23 @@ graf2
 ggsave(graf2, file = "../output/graphs/graf2.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
+# Correlacion MSS y MSH
+```{r}
+polychor(data$msh4, data$mss4)
+
+graf8 <- ggplot(data, aes(mss4, msh4)) +
+  geom_point(size = 1) +
+  geom_smooth(method = "lm") +
+  labs(title = "Correlación entre Movilidad social subjetiva experimentada
+  y Movilidad social subjetiva esperada [r=-0.16]",
+       x = "Movilidad social subjetiva experimentada",
+       y = "Movilidad social subjetiva esperada") +
+  theme_classic(base_size = 10)
+graf8
+
+ggsave(graf8, file = "../output/graphs/graf8.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
 # Educacion x MSS
 ```{r}
 graf3 <- data  %>%
@@ -108,6 +125,14 @@ graf4
 
 ggsave(graf4, file = "../output/graphs/graf4.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
+## Unir ambos graficos
+```{r}
+graf3y4 <- ggarrange(graf3, graf4, nrow = 2)
+graf3y4
+
+ggsave(graf3y4, file = "../output/graphs/graf3y4.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
+```
+
 
 # Correlación MSS y meritocracia
 
@@ -117,7 +142,8 @@ polychor(data$mss4, data$meritocracia)
 graf5 <- ggplot(data, aes(meritocracia, mss4)) +
   geom_point(size = 1) +
   geom_smooth(method = "lm") +
-  labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.01]",
+  labs(title = "Correlación entre Movilidad social subjetiva experimentada
+  y Percepción de meritocracia [r=-0.01]",
        x = "Percepción de meritocracia",
        y = "Movilidad social subjetiva experimentada") +
   theme_classic(base_size = 10)
@@ -125,41 +151,28 @@ graf5
 
 ggsave(graf5, file = "../output/graphs/graf5.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
-
+# Correlación MSH y meritocracia
 ```{r}
 polychor(data$msh4, data$meritocracia)
 
 graf6 <- ggplot(data, aes(meritocracia, msh4)) +
   geom_point(size = 1) +
   geom_smooth(method = "lm") +
-  labs(title = "Correlación entre Movilidad social subjetiva y Percepción de meritocracia [r=-0.02]",
+  labs(title = "Correlación entre Movilidad social subjetiva esperada 
+       y Percepción de meritocracia [r=-0.02]",
        x = "Percepción de meritocracia",
-       y = "Movilidad social subjetiva experimentada") +
+       y = "Movilidad social subjetiva esperada") +
   theme_classic(base_size = 10)
 graf6
 
 ggsave(graf6, file = "../output/graphs/graf6.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
-
+## Unir ambas correlaciones
 ```{r}
-plotdata <- data %>%
-  group_by(educacion) %>%
-  summarize(n = n(),
-         mean = mean(mss4),
-         sd = sd(mss4),
-         se = sd / sqrt(n),
-         ci = qt(0.99, df = n - 1) * sd / sqrt(n))
-plot_educ <- ggplot(plotdata,
-                       aes(x = educacion, 
-                           y = mean, 
-                           group = 1)) +
-  geom_errorbar(aes(ymin = mean - se,
-                    ymax = mean + se),
-                width = .05, colour="grey50") +
-  geom_point(shape = 21, colour = "#5A5858", fill = "white", size = 1.8) +
-  xlab("Nivel educacional") + ylab("Movilidad social subjetiva") + theme_classic(base_size = 10)
+graf6y7 <- ggarrange(graf5, graf6,ncol = 2)
+graf6y7
 
-plot_educ
+ggsave(graf6y7, file = "../output/graphs/graf6y7.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
 
 ## Factores de expansión
@@ -220,22 +233,4 @@ graf2_exp <- ds %>% group_by(msh4_fact) %>%
 graf2_exp
 ggsave(graf2_exp, file = "../output/graphs/graf2_exp.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
 ```
-### Media --> Prueba con estatus subjetivo. Hay diferencias por lo menos. Pasar mss a numero de nuevo y probar esto
-```{r}
-ds %>% group_by(educacion) %>% 
-  summarise(media_educ = survey_mean(mss4,vartype = c("ci"),na.rm = TRUE))
-```
-### Grafico de cajas
-```{r}
-svyboxplot(mss4~educacion, design=ds,all.outliers=TRUE)
-```
-```{r}
-graf7 <- data %>% select(mss4,msh4) %>%
-  ggpairs()
-
-graf7
-
-ggsave(graf7, file = "../output/graphs/graf7.png",device = "png",width = 25,height = 13,dpi = "retina",units = "cm")
-```
-
 

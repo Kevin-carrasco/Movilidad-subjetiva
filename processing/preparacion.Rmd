@@ -24,6 +24,7 @@ data = coes_long %>% select(ess4=d01_01_w04,
                             educacion=m01_w04,
                             esfuerzo=c18_09_w04,
                             inteligencia=c18_10_w04,
+                            oportunidades=c18_13_w04,
                             fe_poblacion=fact_exp01_w04,
                             fe_pobsex=fact_exp02_w04,
                             estrato=estrato_w04,
@@ -126,15 +127,22 @@ summary(data$esfuerzo)
 summary(data$inteligencia)
 ```
 ```{r}
+# igualdad de oportunidades
+summary(data$oportunidades)
+```
+
+```{r}
 # Quitar NA
 data$esfuerzo <- recode(data$esfuerzo, "c(-888,-999)=NA")
 data$inteligencia <- recode(data$inteligencia, "c(-888,-999)=NA")
-
+data$oportunidades <- recode(data$oportunidades, "c(-888,-999)=NA")
 # cambiar etiqueta
 get_label(data$esfuerzo)
 data$esfuerzo <- set_label(x = data$esfuerzo,label = "Las personas son recompensadas por sus esfuerzos")
 get_label(data$inteligencia)
 data$inteligencia <- set_label(x = data$inteligencia,label = "Las personas son recompensada por su inteligencia")
+get_label(data$oportunidades)
+data$oportunidades <- set_label(x = data$oportunidades,label = "Hay igualdad de oportunidades")
 ```
 
 ```{r}
