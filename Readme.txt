@@ -1,4 +1,5 @@
 Informe realizado para el curso Metodología I del Magíster en Ciencias sociales de la FACSO Uchile
+Repositorio disponible en: https://github.com/kevin-carrasco/movilidad-subjetiva
 
 Flujo de trabajo basado en protocolo IPO (https://juancarloscastillo.github.io/ipo/)
 
